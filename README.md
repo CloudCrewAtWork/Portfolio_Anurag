@@ -1,10 +1,15 @@
-# Retro Computer Landing Page
+# Classic Macintosh Landing Page
 
-A stunning Three.js landing page featuring a 3D retro computer model with smooth scroll animations and a terminal overlay with typing effects.
+A stunning Three.js landing page featuring a 3D classic Macintosh computer model with smooth scroll animations and a terminal overlay with typing effects.
 
 ## Features
 
-- **3D Retro Computer Model**: Custom-built using Three.js primitives with realistic materials and lighting
+- **3D Classic Macintosh Model**: Authentic recreation of the iconic all-in-one Macintosh design with:
+  - Beige color scheme
+  - Built-in CRT monitor
+  - Disk drive slot
+  - Apple logo
+  - Matching keyboard and mouse
 - **Cinematic Scroll Animation**: Camera smoothly zooms out from the screen to reveal the full computer
 - **Terminal Overlay**: Authentic retro terminal interface with:
   - Blinking cursor
@@ -46,9 +51,9 @@ Simply serve the files using any static file server of your choice.
 
 ## How It Works
 
-1. The page starts with the camera zoomed in on the computer screen
-2. The terminal overlay displays typing animations
-3. As you scroll down, the camera zooms out to reveal the full retro computer
+1. The page starts with the camera zoomed in on the Macintosh screen
+2. The terminal overlay displays classic Mac-themed typing animations
+3. As you scroll down, the camera zooms out to reveal the full Macintosh computer
 4. The computer rotates slightly during scroll for a cinematic effect
 5. The terminal overlay fades out as you scroll further
 

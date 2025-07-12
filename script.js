@@ -1,16 +1,16 @@
 // Three.js Scene Setup
 let scene, camera, renderer;
 let computer, screen;
-let initialCameraZ = 5;
-let targetCameraZ = 25;
+let initialCameraZ = 8;
+let targetCameraZ = 30;
 let scrollProgress = 0;
 
 // Terminal Typing Animation
 const typingText = [
-    "Welcome to the retro terminal...",
-    "Initializing system...",
-    "Loading vintage computing experience...",
-    "System ready."
+    "Welcome to Macintosh.",
+    "System 7.5 starting up...",
+    "The computer for the rest of us.",
+    "Think different."
 ];
 
 // Initialize Three.js
@@ -67,21 +67,36 @@ function init() {
 function createRetroComputer() {
     const computerGroup = new THREE.Group();
 
-    // Monitor Case
-    const monitorGeometry = new THREE.BoxGeometry(12, 10, 8);
-    const monitorMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0x2a2a2a,
+    // Classic Macintosh beige color
+    const beigeColor = 0xd4c5b0;
+    const darkBeigeColor = 0xb8a898;
+    
+    // Main Macintosh Body
+    const bodyGeometry = new THREE.BoxGeometry(9, 11, 10);
+    const bodyMaterial = new THREE.MeshPhongMaterial({ 
+        color: beigeColor,
+        specular: 0x222222,
+        shininess: 20
+    });
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    body.position.y = 0;
+    body.castShadow = true;
+    body.receiveShadow = true;
+    computerGroup.add(body);
+
+    // Front Face Indent (for screen area)
+    const indentGeometry = new THREE.BoxGeometry(7.5, 9, 1);
+    const indentMaterial = new THREE.MeshPhongMaterial({ 
+        color: darkBeigeColor,
         specular: 0x111111,
         shininess: 10
     });
-    const monitor = new THREE.Mesh(monitorGeometry, monitorMaterial);
-    monitor.position.y = 0;
-    monitor.castShadow = true;
-    monitor.receiveShadow = true;
-    computerGroup.add(monitor);
+    const indent = new THREE.Mesh(indentGeometry, indentMaterial);
+    indent.position.set(0, 0.5, 4.5);
+    computerGroup.add(indent);
 
     // Screen
-    const screenGeometry = new THREE.BoxGeometry(10, 7.5, 0.1);
+    const screenGeometry = new THREE.BoxGeometry(6, 6, 0.1);
     const screenMaterial = new THREE.MeshPhongMaterial({ 
         color: 0x001100,
         emissive: 0x00ff00,
@@ -90,11 +105,11 @@ function createRetroComputer() {
         shininess: 100
     });
     screen = new THREE.Mesh(screenGeometry, screenMaterial);
-    screen.position.z = 4;
+    screen.position.set(0, 1.5, 5);
     computerGroup.add(screen);
 
     // Screen Glass Effect
-    const glassGeometry = new THREE.BoxGeometry(10.1, 7.6, 0.2);
+    const glassGeometry = new THREE.BoxGeometry(6.1, 6.1, 0.2);
     const glassMaterial = new THREE.MeshPhysicalMaterial({
         color: 0x000000,
         metalness: 0.1,
@@ -106,43 +121,102 @@ function createRetroComputer() {
         clearcoatRoughness: 0.1
     });
     const glass = new THREE.Mesh(glassGeometry, glassMaterial);
-    glass.position.z = 4.1;
+    glass.position.set(0, 1.5, 5.1);
     computerGroup.add(glass);
 
-    // Monitor Stand
-    const standGeometry = new THREE.CylinderGeometry(2, 3, 2, 8);
-    const standMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0x2a2a2a,
-        specular: 0x111111,
-        shininess: 10
+    // Disk Drive Slot
+    const driveSlotGeometry = new THREE.BoxGeometry(4, 0.2, 0.5);
+    const driveSlotMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0x1a1a1a
     });
-    const stand = new THREE.Mesh(standGeometry, standMaterial);
-    stand.position.y = -6;
-    stand.castShadow = true;
-    computerGroup.add(stand);
+    const driveSlot = new THREE.Mesh(driveSlotGeometry, driveSlotMaterial);
+    driveSlot.position.set(0, -3, 5);
+    computerGroup.add(driveSlot);
 
-    // Monitor Base
-    const baseGeometry = new THREE.CylinderGeometry(5, 5, 0.5, 16);
-    const base = new THREE.Mesh(baseGeometry, standMaterial);
-    base.position.y = -7;
+    // Apple Logo (simplified)
+    const logoGeometry = new THREE.CircleGeometry(0.3, 32);
+    const logoMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0x666666,
+        specular: 0x999999,
+        shininess: 50
+    });
+    const logo = new THREE.Mesh(logoGeometry, logoMaterial);
+    logo.position.set(0, -1.5, 5.01);
+    computerGroup.add(logo);
+
+    // Base/Foot
+    const baseGeometry = new THREE.BoxGeometry(9.5, 0.5, 10.5);
+    const base = new THREE.Mesh(baseGeometry, bodyMaterial);
+    base.position.y = -5.75;
     base.castShadow = true;
     computerGroup.add(base);
 
     // Keyboard
-    const keyboardGeometry = new THREE.BoxGeometry(12, 0.5, 4);
+    const keyboardGeometry = new THREE.BoxGeometry(11, 0.6, 4.5);
     const keyboardMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0x1a1a1a,
-        specular: 0x111111,
-        shininess: 5
+        color: beigeColor,
+        specular: 0x222222,
+        shininess: 15
     });
     const keyboard = new THREE.Mesh(keyboardGeometry, keyboardMaterial);
-    keyboard.position.set(0, -8, 8);
-    keyboard.rotation.x = -0.1;
+    keyboard.position.set(0, -7, 8);
+    keyboard.rotation.x = -0.08;
     keyboard.castShadow = true;
     computerGroup.add(keyboard);
 
+    // Keyboard Keys (simplified)
+    const keyRowGeometry = new THREE.BoxGeometry(10, 0.1, 0.4);
+    const keyMaterial = new THREE.MeshPhongMaterial({ 
+        color: darkBeigeColor
+    });
+    
+    for (let i = 0; i < 5; i++) {
+        const keyRow = new THREE.Mesh(keyRowGeometry, keyMaterial);
+        keyRow.position.set(0, -6.6, 6.5 + i * 0.7);
+        keyRow.rotation.x = -0.08;
+        computerGroup.add(keyRow);
+    }
+
+    // Mouse
+    const mouseGroup = new THREE.Group();
+    
+    // Mouse body
+    const mouseGeometry = new THREE.BoxGeometry(2, 0.8, 3);
+    const mouseMaterial = new THREE.MeshPhongMaterial({ 
+        color: beigeColor,
+        specular: 0x222222,
+        shininess: 15
+    });
+    const mouseBody = new THREE.Mesh(mouseGeometry, mouseMaterial);
+    mouseBody.castShadow = true;
+    mouseGroup.add(mouseBody);
+
+    // Mouse button
+    const buttonGeometry = new THREE.BoxGeometry(1.8, 0.1, 2);
+    const buttonMaterial = new THREE.MeshPhongMaterial({ 
+        color: darkBeigeColor
+    });
+    const mouseButton = new THREE.Mesh(buttonGeometry, buttonMaterial);
+    mouseButton.position.y = 0.45;
+    mouseButton.position.z = -0.3;
+    mouseGroup.add(mouseButton);
+
+    // Mouse cable (simplified)
+    const cableGeometry = new THREE.CylinderGeometry(0.1, 0.1, 3, 8);
+    const cableMaterial = new THREE.MeshPhongMaterial({ 
+        color: darkBeigeColor
+    });
+    const cable = new THREE.Mesh(cableGeometry, cableMaterial);
+    cable.rotation.z = Math.PI / 2;
+    cable.position.set(-1.5, 0, -1.5);
+    mouseGroup.add(cable);
+
+    mouseGroup.position.set(8, -7, 8);
+    mouseGroup.rotation.y = -0.3;
+    computerGroup.add(mouseGroup);
+
     // Add scan lines effect
-    const scanLinesGeometry = new THREE.PlaneGeometry(10, 7.5);
+    const scanLinesGeometry = new THREE.PlaneGeometry(6, 6);
     const scanLinesMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 }
@@ -158,7 +232,7 @@ function createRetroComputer() {
             uniform float time;
             varying vec2 vUv;
             void main() {
-                float scanLine = sin(vUv.y * 300.0 + time * 5.0) * 0.04;
+                float scanLine = sin(vUv.y * 200.0 + time * 5.0) * 0.04;
                 vec3 color = vec3(0.0, 1.0, 0.0) * (0.5 + scanLine);
                 float alpha = 0.1 + scanLine * 0.5;
                 gl_FragColor = vec4(color, alpha);
@@ -168,7 +242,7 @@ function createRetroComputer() {
         side: THREE.DoubleSide
     });
     const scanLines = new THREE.Mesh(scanLinesGeometry, scanLinesMaterial);
-    scanLines.position.z = 4.2;
+    scanLines.position.set(0, 1.5, 5.2);
     computerGroup.add(scanLines);
 
     computer = computerGroup;
