@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #000;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Canvas Container */
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* Scroll Content */
+.scroll-content {
+    height: 300vh;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Terminal Overlay */
+.terminal-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+    width: 90%;
+    max-width: 800px;
+}
+
+.terminal-content {
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #0f0;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.terminal-header {
+    background: rgba(30, 30, 30, 0.9);
+    padding: 10px 15px;
+    border-bottom: 1px solid #0f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.terminal-button.red {
+    background: #ff5f56;
+}
+
+.terminal-button.yellow {
+    background: #ffbd2e;
+}
+
+.terminal-button.green {
+    background: #27c93f;
+}
+
+.terminal-title {
+    color: #0f0;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.8;
+}
+
+.terminal-body {
+    padding: 20px;
+    min-height: 100px;
+}
+
+.terminal-line {
+    color: #0f0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.prompt {
+    margin-right: 10px;
+    color: #0f0;
+}
+
+.typed-text {
+    color: #0f0;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.cursor {
+    animation: blink 1s infinite;
+    color: #0f0;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Fade terminal as user scrolls */
+@media (max-width: 768px) {
+    .terminal-overlay {
+        width: 95%;
+    }
+    
+    .terminal-line {
+        font-size: 16px;
+    }
+}

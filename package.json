@@ -1,0 +1,22 @@
+{
+  "name": "retro-computer-landing",
+  "version": "1.0.0",
+  "description": "A Three.js landing page with a retro 3D computer model and scroll animations",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "npx serve -p 8000"
+  },
+  "keywords": [
+    "threejs",
+    "3d",
+    "landing-page",
+    "retro",
+    "computer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
